@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7eafa">
+  <meta name="description" content="Estudia con una criatura mágica en tu propio jardín.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/mochi.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Mochi Garden · Enfócate y florece</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Mochi Garden, inicio">
+        <span class="brand-mark">✿</span><span>Mochi <b>Garden</b></span>
+      </a>
+      <div class="gem-wallet" aria-label="Gemas de enfoque acumuladas">
+        <span aria-hidden="true">◆</span><strong id="gemCount">0</strong><small>gemas</small>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow">TU RINCÓN DE CALMA</p>
+          <h1>Un ratito de foco,<br><span>un jardín más feliz.</span></h1>
+          <p class="muted">Cada sesión completada ayuda a que tu pequeño mundo crezca.</p>
+          <button class="primary-btn" id="focusShortcut">Empezar a estudiar <span>→</span></button>
+        </div>
+        <div class="hero-art" aria-label="Mochi, una criatura fantástica peludita">
+          <div class="sun-glow"></div>
+          <div class="sparkle s1">✦</div><div class="sparkle s2">✧</div>
+          <div class="mochi" id="heroMochi"><span class="blush left"></span><span class="blush right"></span><span class="eye left-eye"></span><span class="eye right-eye"></span><span class="mouth"></span><span class="tuft">✦</span></div>
+          <div class="ground"></div>
+          <span class="tiny-flower f1">✿</span><span class="tiny-flower f2">❀</span>
+        </div>
+      </section>
+
+      <nav class="tabs" aria-label="Secciones">
+        <button class="tab active" data-view="garden">🌷 Jardín</button>
+        <button class="tab" data-view="focus">⏳ Enfoque</button>
+        <button class="tab" data-view="shop">🛍️ Tienda</button>
+        <button class="tab" data-view="warehouse">🎒 Almacén</button>
+        <button class="tab" data-view="stats">📖 Progreso</button>
+      </nav>
+
+      <section class="view active" id="view-garden">
+        <div class="section-heading"><div><p class="eyebrow">TU PEQUEÑO MUNDO</p><h2>El jardín de Mochi</h2></div><span class="pill" id="landLabel">Terreno 1 · Brote</span></div>
+        <div class="garden-scene panel" id="gardenScene">
+          <div class="garden-sky"><span class="cloud c1"></span><span class="cloud c2"></span><span class="sun">☼</span></div>
+          <div class="garden-hill hill-back"></div><div class="garden-hill hill-front"></div>
+          <div class="garden-items" id="gardenItems"></div>
+          <div class="garden-mochi-wrap">
+            <div class="mochi garden-mochi" id="gardenMochi"><span class="blush left"></span><span class="blush right"></span><span class="eye left-eye"></span><span class="eye right-eye"></span><span class="mouth"></span><span class="tuft">✦</span></div>
+            <div class="name-tag">Mochi <span id="moodEmoji">♡</span></div>
+          </div>
+          <div class="garden-footer"><span>🌱 Un lugar para crecer despacito</span><span id="gardenSize">1 zona desbloqueada</span></div>
+        </div>
+        <div class="stat-grid">
+          <article class="stat-card panel"><div class="stat-label"><span>🍓</span> Hambre <b id="hungerText">100%</b></div><div class="progress"><span id="hungerBar"></span></div><p id="hungerHint">Mochi está bien alimentada.</p></article>
+          <article class="stat-card panel"><div class="stat-label"><span>💗</span> Felicidad <b id="happinessText">85%</b></div><div class="progress pink"><span id="happinessBar"></span></div><p id="happinessHint">Tu jardín le hace sonreír.</p></article>
+        </div>
+        <div class="quick-actions"><button class="soft-btn" data-open="shop" data-category="food">🍡 Dar de comer</button><button class="soft-btn" data-open="shop" data-category="land">🌳 Ampliar jardín</button></div>
+      </section>
+
+      <section class="view" id="view-focus">
+        <div class="section-heading"><div><p class="eyebrow">UN PASO CADA VEZ</p><h2>Tiempo para ti</h2></div><span class="pill">◆ + gemas al completar</span></div>
+        <div class="focus-layout">
+          <div class="timer-card panel">
+            <div class="timer-mascot"><div class="mochi sleeping" id="timerMochi"><span class="blush left"></span><span class="blush right"></span><span class="eye left-eye"></span><span class="eye right-eye"></span><span class="mouth"></span><span class="tuft">✦</span></div><span class="zzz" id="zzz">z z z</span></div>
+            <p class="eyebrow" id="timerState">LISTA PARA EMPEZAR</p>
+            <div class="timer-display" id="timerDisplay">25:00</div>
+            <p class="muted timer-subtitle" id="timerSubtitle">Elige una sesión y deja que el mundo espere.</p>
+            <p class="overtime-note hidden" id="overtimeNote">¡Tiempo cumplido! Si sigues estudiando, el reloj cuenta el tiempo extra. Pulsa completar cuando estés lista: ese tiempo también suma gemas y bonus.</p>
+            <div class="duration-options" id="durationOptions">
+              <button class="duration selected" data-minutes="25">25 min <small>+1 gema</small></button>
+              <button class="duration" data-minutes="45">45 min <small>+2 gemas</small></button>
+              <button class="duration" data-minutes="60">60 min <small>+ bonus</small></button>
+            </div>
+            <div class="custom-duration" id="customDuration"><label for="customMinutes">O elige tus minutos</label><div class="custom-duration-row"><input id="customMinutes" type="number" min="1" max="600" inputmode="numeric" placeholder="Ej. 35"><button class="soft-btn" id="applyCustomDuration" type="button">Elegir</button></div><small>1 gema por minuto estudiado + bonus extra al completar.</small></div>
+            <button class="primary-btn full" id="startFocus">Comenzar sesión ✦</button>
+            <button class="primary-btn full hidden" id="acceptFocus">Completar sesión y recibir bonus ✨</button>
+            <button class="danger-btn full hidden" id="cancelFocus">Cancelar sesión</button>
+            <p class="fine-print">Ganas 1 gema por cada minuto completo estudiado. Si completas la sesión, recibes además un bonus exponencial. Si abandonas la página, conservas las gemas de los minutos completos, pero pierdes el bonus.</p>
+          </div>
+          <aside class="focus-note panel"><span class="note-icon">☁️</span><h3>Tu único objetivo</h3><p>Concéntrate en una sola cosa. Mochi descansará mientras tú avanzas.</p><div class="note-divider"></div><p class="note-small">✨ Las gemas solo se consiguen al completar la sesión. No caducan y tú decides cuándo gastarlas.</p></aside>
+        </div>
+      </section>
+
+      <section class="view" id="view-shop">
+        <div class="section-heading"><div><p class="eyebrow">CAMBIA GEMAS POR MAGIA</p><h2>La tiendita del jardín</h2></div><span class="pill">◆ <span id="shopGemCount">0</span> gemas</span></div>
+        <div class="shop-tabs">
+          <button class="shop-tab active" data-category="food">🍓 Comida</button><button class="shop-tab" data-category="plants">🌼 Plantas</button><button class="shop-tab" data-category="land">🌳 Terreno</button>
+        </div>
+        <div class="shop-grid" id="shopGrid"></div>
+        <p class="shop-footnote">Las compras son opcionales: guarda tus gemas para lo que más te guste.</p>
+      </section>
+
+      <section class="view" id="view-warehouse">
+        <div class="section-heading"><div><p class="eyebrow">TUS OBJETOS GUARDADOS</p><h2>El almacén de Mochi</h2></div><span class="pill">🍓 Comida sin gastar</span></div>
+        <p class="muted warehouse-intro">Aquí guardas la comida que compras en la tienda. Elige cuándo usarla para recuperar el hambre de Mochi.</p>
+        <div class="shop-grid" id="warehouseGrid"></div>
+      </section>
+
+      <section class="view" id="view-stats">
+        <div class="section-heading"><div><p class="eyebrow">CADA MINUTO CUENTA</p><h2>Tu progreso</h2></div></div>
+        <div class="stats-overview">
+          <article class="panel big-stat"><span class="big-stat-icon">◆</span><p class="muted">Gemas acumuladas</p><strong id="statsGems">0</strong><small>Tu reserva mágica</small></article>
+          <article class="panel big-stat"><span class="big-stat-icon">⏱</span><p class="muted">Tiempo enfocado</p><strong id="totalTime">0 min</strong><small>Sesiones completadas</small></article>
+          <article class="panel big-stat"><span class="big-stat-icon">🌱</span><p class="muted">Sesiones completadas</p><strong id="sessionCount">0</strong><small>Pequeños pasos, grandes cambios</small></article>
+        </div>
+        <div class="panel history-panel"><h3>Últimas sesiones</h3><div id="sessionHistory" class="session-history"><p class="muted">Tu primera sesión aparecerá aquí.</p></div></div>
+        <div class="panel reset-panel"><div><h3>¿Empezar de nuevo?</h3><p class="muted">Esto borra el progreso guardado en este dispositivo.</p></div><button class="danger-outline" id="resetData">Restablecer datos</button></div>
+      </section>
+    </main>
+    <footer>Hecho con calma y un poquito de magia <span>✿</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop hidden" id="modalBackdrop"><div class="modal panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-symbol" id="modalSymbol">🌷</div><h2 id="modalTitle">¡Buen trabajo!</h2><p id="modalMessage"></p><button class="primary-btn full" id="modalOk">Seguir</button></div></div>
+  <script src="./app.js"></script>
+</body>
+</html>
